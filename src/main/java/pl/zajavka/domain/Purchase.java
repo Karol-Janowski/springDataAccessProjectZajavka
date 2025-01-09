@@ -1,8 +1,7 @@
-package pl.zajavka.domin;
+package pl.zajavka.domain;
 
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @With
@@ -15,7 +14,7 @@ public class Purchase {
     private Long id;
     private Customer customer;
     private Product product;
-    private Integer integer;
+    private Integer quantity;
     private OffsetDateTime dateTime;
 
 }

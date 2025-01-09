@@ -1,4 +1,4 @@
-package pl.zajavka.domin;
+package pl.zajavka.domain;
 
 import lombok.*;
 

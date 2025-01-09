@@ -1,8 +1,7 @@
-package pl.zajavka.domin;
+package pl.zajavka.domain;
 
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @With
