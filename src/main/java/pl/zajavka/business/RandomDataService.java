@@ -21,18 +21,18 @@ public class RandomDataService {
     @Transactional
     public void create() {
         Customer customer = customerRepository.create(randomDataPreparationService.createCustomer());
-//        Producer producer = producerRepository.create(randomDataPreparationService.createProducer());
-//        Product product = productRepository.create(randomDataPreparationService.createProduct(producer));
-//        Opinion opinion = opinionRepository.create(randomDataPreparationService.createOpinion(customer, product));
-//        Purchase purchase = purchaseRepository.create(randomDataPreparationService.createPurchase(customer, product));
+        Producer producer = producerRepository.create(randomDataPreparationService.createProducer());
+        Product product = productRepository.create(randomDataPreparationService.createProduct(producer));
+        Opinion opinion = opinionRepository.create(randomDataPreparationService.createOpinion(customer, product));
+        Purchase purchase = purchaseRepository.create(randomDataPreparationService.createPurchase(customer, product));
 
 
 
         log.debug("Random customer created: [{}]", customer);
-//        log.debug("Random opinion created: [{}]", opinion);
-//        log.debug("Random producer created: [{}]", producer);
-//        log.debug("Random product created: [{}]", product);
-//        log.debug("Random purchase created: [{}]", purchase);
+        log.debug("Random opinion created: [{}]", opinion);
+        log.debug("Random producer created: [{}]", producer);
+        log.debug("Random product created: [{}]", product);
+        log.debug("Random purchase created: [{}]", purchase);
 
     }
 
