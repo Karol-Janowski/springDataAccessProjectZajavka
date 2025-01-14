@@ -12,7 +12,6 @@ public class ProducerService {
     private final ProductService productService;
     private final ProducerRepository producerRepository;
 
-    @Transactional
     public Producer create(Producer producer) {
         return producerRepository.create(producer);
     }

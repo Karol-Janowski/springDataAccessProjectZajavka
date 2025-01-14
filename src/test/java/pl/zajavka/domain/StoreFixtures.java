@@ -13,7 +13,7 @@ public class StoreFixtures {
                 .email("zajavka.pl@gmail.com")
                 .name("zajavkowicz")
                 .surname("zajavkowy")
-                .dateOfBirth(LocalDate.of(1984, 10, 2))
+                .dateOfBirth(LocalDate.of(1994, 10, 2))
                 .telephoneNumber("123456789")
                 .build();
     }

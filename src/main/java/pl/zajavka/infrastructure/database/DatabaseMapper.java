@@ -6,6 +6,8 @@ import pl.zajavka.domain.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
@@ -73,6 +75,27 @@ public class DatabaseMapper {
                 .surname(resultSet.getString("surname"))
                 .dateOfBirth(LocalDate.parse(resultSet.getString("date_of_birth")))
                 .telephoneNumber(resultSet.getString("telephone_number"))
+                .build();
+    }
+
+    public Purchase mapPurchase(ResultSet resultSet, int i) throws SQLException {
+        return Purchase.builder()
+                .id(resultSet.getLong("id"))
+                .customer(Customer.builder().id(resultSet.getLong("customer_id")).build())
+                .product(Product.builder().id(resultSet.getLong("product_id")).build())
+                .quantity(resultSet.getInt("quantity"))
+                .dateTime(OffsetDateTime.parse(resultSet.getString("date_time")))
+                .build();
+    }
+
+    public Opinion mapOpinion(ResultSet resultSet, int i) throws SQLException {
+        return Opinion.builder()
+                .id(resultSet.getLong("id"))
+                .customer(Customer.builder().id(resultSet.getLong("customer_id")).build())
+                .product(Product.builder().id(resultSet.getLong("product_id")).build())
+                .stars(resultSet.getByte("starts"))
+                .comment(resultSet.getString("comment"))
+                .dateTime(OffsetDateTime.parse(resultSet.getString("date_time")))
                 .build();
     }
 }
