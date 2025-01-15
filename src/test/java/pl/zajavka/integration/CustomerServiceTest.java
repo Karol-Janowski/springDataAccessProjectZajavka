@@ -71,6 +71,7 @@ public class CustomerServiceTest {
     @Test
     @DisplayName("Exercise 4 part 2")
     void thatPurchaseAndOpinionIsNotRemovedWhenCustomerRemovingFails() {
+        //given
         final Customer customer = customerService.create(
                 StoreFixtures.someCustomer().withDateOfBirth(LocalDate.of(1950, 10, 4)));
         final Producer producer = producerService.create(StoreFixtures.someProducer());
