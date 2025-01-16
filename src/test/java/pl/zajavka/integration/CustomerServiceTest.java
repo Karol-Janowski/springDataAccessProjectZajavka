@@ -35,7 +35,7 @@ public class CustomerServiceTest {
         assertNotNull(opinionService);
         assertNotNull(producerService);
         assertNotNull(productService);
-        reloadDataService.loadRandomData();
+        reloadDataService.reloadData();
     }
 
     @Test
@@ -117,5 +117,20 @@ public class CustomerServiceTest {
                 ),
                 opinionService.findAll(customer.getEmail())
         );
+    }
+
+    @Test
+    @DisplayName("Exercise 8")
+    void thatCustomersGivingUnwantedOpinionsAreRemoved() {
+        //given
+        assertEquals(100, customerService.findAll().size());
+
+
+        //when
+        customerService.removeUnwantedCustomers();
+
+        //then
+        Assertions.assertEquals(68, customerService.findAll().size());
+
     }
 }

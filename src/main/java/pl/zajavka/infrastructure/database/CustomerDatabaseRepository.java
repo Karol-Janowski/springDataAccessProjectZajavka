@@ -27,7 +27,7 @@ public class CustomerDatabaseRepository implements CustomerRepository {
     private static final String DELETE_ALL
             = "DELETE FROM CUSTOMER WHERE 1=1";
     private static final String DELETE_WHERE_CUSTOMER_EMAIL
-            = "DELETE FROM CUSTOMER WHERE EMAIL = :email";
+            = "DELETE FROM CUSTOMER CASCADE WHERE EMAIL = :email";
 
     private final SimpleDriverDataSource simpleDriverDataSource;
     private final DatabaseMapper databaseMapper;

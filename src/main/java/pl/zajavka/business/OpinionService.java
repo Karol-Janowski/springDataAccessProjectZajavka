@@ -61,5 +61,9 @@ public class OpinionService {
     public void removeUnwantedOpinions() {
         opinionRepository.removeUnwantedOpinions();
     }
+
+    public boolean customerGivesUnwantedOpinions(String email) {
+        return opinionRepository.customerGivesUnwantedOpinions(email);
+    }
 }
 

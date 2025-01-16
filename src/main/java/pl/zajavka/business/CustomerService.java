@@ -56,4 +56,14 @@ public class CustomerService {
     private boolean isOlderThan40(Customer existingCustomer) {
         return LocalDate.now().getYear() - existingCustomer.getDateOfBirth().getYear() > 40;
     }
+
+    @Transactional
+    public void removeUnwantedCustomers() {
+        List<Customer> customers = customerRepository.findAll().stream()
+                .filter(customer -> !isOlderThan40(customer))
+                .filter(customer -> opinionService.customerGivesUnwantedOpinions(customer.getEmail()))
+                .toList();
+
+        customers.forEach(customer -> customerRepository.remove(customer.getEmail()));
+    }
 }
