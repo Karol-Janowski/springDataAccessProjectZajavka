@@ -12,6 +12,7 @@ import pl.zajavka.infrastructure.configuration.DatabaseConfiguration;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Repository
@@ -46,5 +47,10 @@ public class ProductDatabaseRepository implements ProductRepository {
     @Override
     public void removeAll() {
         new JdbcTemplate(simpleDriverDataSource).update(DELETE_ALL);
+    }
+
+    @Override
+    public Optional<Product> find(String productCode) {
+        return null;
     }
 }

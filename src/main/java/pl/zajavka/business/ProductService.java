@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.domain.Product;
 
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 @Service
 @AllArgsConstructor
@@ -24,5 +25,10 @@ public class ProductService {
 
     public void removeAll() {
         productRepository.removeAll();
+    }
+
+    public Product find(String productCode) {
+        return productRepository.find(productCode)
+                .orElseThrow(() -> new RuntimeException("Customer with email: [%s] is missing".formatted(productCode)));
     }
 }
