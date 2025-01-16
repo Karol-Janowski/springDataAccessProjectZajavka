@@ -52,5 +52,14 @@ public class OpinionService {
     public List<Opinion> findAll(String email) {
         return opinionRepository.findAll(email);
     }
+
+    public List<Opinion> findUnwantedOpinions() {
+        return opinionRepository.findUnwantedOpinions();
+    }
+
+    @Transactional
+    public void removeUnwantedOpinions() {
+        opinionRepository.removeUnwantedOpinions();
+    }
 }
 

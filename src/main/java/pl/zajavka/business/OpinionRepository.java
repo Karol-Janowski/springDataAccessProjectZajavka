@@ -15,4 +15,7 @@ public interface OpinionRepository {
 
     List<Opinion> findAll(String email);
 
+    List<Opinion> findUnwantedOpinions();
+
+    void removeUnwantedOpinions();
 }
