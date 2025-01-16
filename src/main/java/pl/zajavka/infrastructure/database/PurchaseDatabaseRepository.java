@@ -19,9 +19,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class PurchaseDatabaseRepository implements PurchaseRepository {
 
-    private static final String DELETE_ALL = "DELETE FROM PURCHASE WHERE 1=1";
-    private static final String DELETE_ALL_WHERE_CUSTOMER_EMAIL
-            = "DELETE FROM PURCHASE WHERE CUSTOMER_ID IN (SELECT ID FROM CUSTOMER WHERE EMAIL = :email)";
+    private static final String SELECT_ALL = "SELECT * FROM PURCHASE";
     private static final String SELECT_ALL_WHERE_CUSTOMER_EMAIL = """
             SELECT * FROM PURCHASE AS PUR
                 INNER JOIN CUSTOMER AS CUS ON CUS.ID = PUR.CUSTOMER_ID 
@@ -36,6 +34,9 @@ public class PurchaseDatabaseRepository implements PurchaseRepository {
                 AND PROD.PRODUCT_CODE = :productCode
                 ORDER BY DATE_TIME
             """;
+    private static final String DELETE_ALL = "DELETE FROM PURCHASE WHERE 1=1";
+    private static final String DELETE_ALL_WHERE_CUSTOMER_EMAIL
+            = "DELETE FROM PURCHASE WHERE CUSTOMER_ID IN (SELECT ID FROM CUSTOMER WHERE EMAIL = :email)";
 
     private final SimpleDriverDataSource simpleDriverDataSource;
 
@@ -53,14 +54,9 @@ public class PurchaseDatabaseRepository implements PurchaseRepository {
     }
 
     @Override
-    public void removeAll() {
-        new JdbcTemplate(simpleDriverDataSource).update(DELETE_ALL);
-    }
-
-    @Override
-    public void removeAll(String email) {
-        NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(simpleDriverDataSource);
-        jdbcTemplate.update(DELETE_ALL_WHERE_CUSTOMER_EMAIL, Map.of("email", email));
+    public List<Purchase> findAll() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(simpleDriverDataSource);
+        return jdbcTemplate.query(SELECT_ALL, databaseMapper::mapPurchase);
     }
 
     @Override
@@ -80,5 +76,16 @@ public class PurchaseDatabaseRepository implements PurchaseRepository {
                 ),
                 databaseMapper::mapPurchase
         );
+    }
+
+    @Override
+    public void removeAll() {
+        new JdbcTemplate(simpleDriverDataSource).update(DELETE_ALL);
+    }
+
+    @Override
+    public void removeAll(String email) {
+        NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(simpleDriverDataSource);
+        jdbcTemplate.update(DELETE_ALL_WHERE_CUSTOMER_EMAIL, Map.of("email", email));
     }
 }

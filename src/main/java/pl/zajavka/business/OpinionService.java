@@ -45,6 +45,10 @@ public class OpinionService {
         opinionRepository.remove(email);
     }
 
+    public List<Opinion> findAll() {
+        return opinionRepository.findAll();
+    }
+
     public List<Opinion> findAll(String email) {
         return opinionRepository.findAll(email);
     }
