@@ -13,6 +13,9 @@ import java.util.concurrent.Semaphore;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final OpinionService opinionService;
+    private final PurchaseService purchaseService;
+
 
     @Transactional
     public Product create(Product someProduct1) {
@@ -29,6 +32,14 @@ public class ProductService {
 
     public Product find(String productCode) {
         return productRepository.find(productCode)
-                .orElseThrow(() -> new RuntimeException("Customer with email: [%s] is missing".formatted(productCode)));
+                .orElseThrow(() -> new RuntimeException(String.format("Product with productCode: [%s] doesn't exist", productCode)));
+    }
+
+    @Transactional
+    public void removeCompletely(String productCode) {
+        purchaseService.removeAllByProductCode(productCode);
+        opinionService.removeAllByProductCode(productCode);
+        productRepository.remove(productCode);
+
     }
 }

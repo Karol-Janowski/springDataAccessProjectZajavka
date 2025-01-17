@@ -38,6 +38,18 @@ public class PurchaseDatabaseRepository implements PurchaseRepository {
     private static final String DELETE_ALL_WHERE_CUSTOMER_EMAIL
             = "DELETE FROM PURCHASE WHERE CUSTOMER_ID IN (SELECT ID FROM CUSTOMER WHERE EMAIL = :email)";
 
+    private static final String SELECT_ALL_BY_PRODUCT_CODE = """
+            SELECT * FROM PURCHASE AS PUR
+            INNER JOIN PRODUCT AS PRD ON PRD.ID = PUR.PRODUCT_ID
+            WHERE PRD.PRODUCT_CODE = :productCode
+            ORDER BY DATE_TIME
+            """;
+
+    private static final String DELETE_ALL_BY_PRODUCT_CODE = """
+            DELETE FROM OPINION
+            WHERE PRODUCT_ID IN (SELECT ID FROM PRODUCT WHERE PRODUCT_CODE = :productCode)
+            """;
+
     private final SimpleDriverDataSource simpleDriverDataSource;
 
     private final DatabaseMapper databaseMapper;
@@ -76,6 +88,19 @@ public class PurchaseDatabaseRepository implements PurchaseRepository {
                 ),
                 databaseMapper::mapPurchase
         );
+    }
+
+    @Override
+    public List<Purchase> findAllByProductCode(String productCode) {
+        NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(simpleDriverDataSource);
+        return jdbcTemplate.query(SELECT_ALL_BY_PRODUCT_CODE, Map.of("productCode", productCode), databaseMapper::mapPurchase);
+
+    }
+
+    @Override
+    public void removeAllByProductCode(String productCode) {
+        NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(simpleDriverDataSource);
+        jdbcTemplate.update(DELETE_ALL_BY_PRODUCT_CODE, Map.of("productCode", productCode));
     }
 
     @Override
