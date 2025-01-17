@@ -1,7 +1,6 @@
 package pl.zajavka.integration;
 
 import lombok.AllArgsConstructor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import pl.zajavka.domain.Product;
 import pl.zajavka.domain.StoreFixtures;
 import pl.zajavka.infrastructure.configuration.ApplicationConfiguration;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -40,7 +38,6 @@ public class ShoppingCartServiceTest {
         assertNotNull(producerService);
         assertNotNull(productService);
         assertNotNull(reloadDataService);
-        reloadDataService.reloadData();
     }
 
     @Test
@@ -50,7 +47,7 @@ public class ShoppingCartServiceTest {
         final Customer customer = customerService.create(StoreFixtures.someCustomer());
         final Producer producer = producerService.create(StoreFixtures.someProducer());
         final Product product1 = productService.create(StoreFixtures.someProduct1(producer));
-        productService.create(StoreFixtures.someProduct2(producer));
+        final Product product2 = productService.create(StoreFixtures.someProduct2(producer));
         final var before = purchaseService.findAll(customer.getEmail(), product1.getProductCode());
 
         //when
